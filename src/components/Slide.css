@@ -1,0 +1,21 @@
+/* Slideshow */
+
+.slideshow {
+  margin: 0 auto;
+  #overflow: hidden;
+  max-width: 500px;
+}
+
+.slide {
+  display: inline-block;
+  height: 40px;
+  width: 40px;
+  text-align: center;
+  margin: auto;
+}
+
+.slide.active {
+  border-style: solid;
+  border-color: red;
+}
+
