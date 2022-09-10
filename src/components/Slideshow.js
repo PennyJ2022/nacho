@@ -1,8 +1,8 @@
 import React from 'react'
 import './Slide.css'
 
-const letters = ["A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N", "O", "P", "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z", "SPC", "DEL"];
-const delay = 5000;
+const letters = ["A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N", "O", "P", "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z", "SPC"];
+const delay = 3000;
 
 function Slideshow() {
   const [index, setIndex] = React.useState(0);
@@ -27,10 +27,16 @@ function Slideshow() {
 
   React.useEffect(() => {
     const keyDownHandler = event => {
-      console.log('User pressed: ', event.key);
       if (event.key === 'Enter') {
         event.preventDefault();
-        setOutput(`${outputRef.current}`+letters[`${indexRef.current}`]);
+        var newLetter = '';
+        if (letters[`${indexRef.current}`] === 'SPC') {
+           newLetter = '\xa0';
+        } else {
+           newLetter = letters[`${indexRef.current}`];
+        }
+        setOutput(`${outputRef.current}`+newLetter);
+        setIndex(0);
       }
     };
     document.addEventListener('keydown', keyDownHandler);
