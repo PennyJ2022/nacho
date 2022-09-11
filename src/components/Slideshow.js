@@ -32,6 +32,9 @@ function Slideshow() {
   const [subIndex, setSubIndex] = React.useState(0);
   const subIndexRef = React.useRef(subIndex);
   subIndexRef.current = subIndex;
+  const [rowSelected, setRowSelected] = React.useState(false);
+  const rowSelectedRef = React.useRef(rowSelected);
+  rowSelectedRef.current = rowSelected;
  
   const [output, setOutput] = React.useState('');
   const outputRef = React.useRef(output);
@@ -40,28 +43,46 @@ function Slideshow() {
   React.useEffect(() => {
     setTimeout(
       () => {
-        setIndex((prevIndex) => 
-          prevIndex === letters.length - 1 ? 0 : prevIndex + 1
-        );
-        indexRef.current = index;
+        if (rowSelected) {
+          setSubIndex((prevSubIndex) => 
+            prevSubIndex === letters[index].length - 1 ? 0 : prevSubIndex + 1
+          );
+          subIndexRef.current = subIndex;
+          if (subIndex === 0) {
+              setRowSelected(false);
+          }
+        } else {
+          setIndex((prevIndex) => 
+            prevIndex === letters.length - 1 ? 0 : prevIndex + 1
+          );
+          indexRef.current = index;
+          setSubIndex(0);
+          subIndexRef.current = subIndex;
+        }
       },
       delay
     );
     return () => {};
-  }, [index]);
+  }, [index, subIndex, rowSelected]);
 
   React.useEffect(() => {
     const keyDownHandler = event => {
       if (event.key === 'Enter') {
         event.preventDefault();
-        var newLetter = '';
-        if (letters[`${indexRef.current}`] === 'SPC') {
-           newLetter = '\xa0';
-        } else {
-           newLetter = letters[`${indexRef.current}`];
+        if (rowSelectedRef.current) {
+          var newLetter = '';
+          if (letters[`${indexRef.current}`][`${subIndexRef.current}`] === 'SPC') {
+             newLetter = '\xa0';
+          } else {
+             newLetter = letters[`${indexRef.current}`][`${subIndexRef.current}`];
+          }
+          setOutput(`${outputRef.current}`+newLetter);
+          setIndex(0);
+          setSubIndex(0);
         }
-        setOutput(`${outputRef.current}`+newLetter);
-        setIndex(0);
+        else {
+          setRowSelected(true);
+        }
       }
     };
     document.addEventListener('keydown', keyDownHandler);
