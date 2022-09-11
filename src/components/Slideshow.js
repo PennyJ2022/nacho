@@ -9,6 +9,22 @@ const letters = [["A", "B", "C", "D"],
   ["SPC"]];
 const delay = 3000;
 
+function isActive(activeRow, activeCol, rowIndex, colIndex, rowSelected) {
+  if (rowSelected) {
+    if (activeRow === rowIndex && activeCol === colIndex) {
+      return "slide active";
+    } else {
+      return "slide";
+    }
+  } else {
+    if (activeRow === rowIndex && 0 === colIndex) {
+      return "slide active";
+    } else {
+      return "slide";
+    }
+  }
+}
+
 function Slideshow() {
   const [index, setIndex] = React.useState(0);
   const indexRef = React.useRef(index);
@@ -59,7 +75,7 @@ function Slideshow() {
       {letters.map((letterRow, ridx) => (
         <div className="row" key={ridx} >
           {letterRow.map((letter, idx) => (
-            <div className={`slide${(index === ridx && idx === 0) ? " active" : ""}`} key={idx} > {letter} </div>
+            <div className={isActive(index, 0, ridx, idx, false)} key={idx} > {letter} </div>
           ))}
         </div>
       ))}
