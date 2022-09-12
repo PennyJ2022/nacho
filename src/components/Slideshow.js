@@ -41,15 +41,17 @@ function Slideshow() {
   outputRef.current = output;
 
   React.useEffect(() => {
-    setTimeout(
+    let timer = setTimeout(
       () => {
         if (rowSelected) {
           setSubIndex((prevSubIndex) => 
             prevSubIndex === letters[index].length - 1 ? 0 : prevSubIndex + 1
           );
           subIndexRef.current = subIndex;
-          if (subIndex === 0) {
+          if (subIndex === letters[index].length - 1) {
+              // loop through the columns, nothing selected, back to loop through rows
               setRowSelected(false);
+              rowSelectedRef.current = rowSelected;
           }
         } else {
           setIndex((prevIndex) => 
@@ -62,7 +64,7 @@ function Slideshow() {
       },
       delay
     );
-    return () => {};
+    return () => {clearTimeout(timer)};
   }, [index, subIndex, rowSelected]);
 
   React.useEffect(() => {
@@ -77,11 +79,17 @@ function Slideshow() {
              newLetter = letters[`${indexRef.current}`][`${subIndexRef.current}`];
           }
           setOutput(`${outputRef.current}`+newLetter);
+          // reset everything
           setIndex(0);
           setSubIndex(0);
+          setRowSelected(false);
+          indexRef.current = index;
+          subIndexRef.current = subIndex;
+          rowSelectedRef.current = rowSelected;
         }
         else {
           setRowSelected(true);
+          rowSelectedRef.current = rowSelected;
         }
       }
     };
@@ -96,7 +104,7 @@ function Slideshow() {
       {letters.map((letterRow, ridx) => (
         <div className="row" key={ridx} >
           {letterRow.map((letter, idx) => (
-            <div className={isActive(index, 0, ridx, idx, false)} key={idx} > {letter} </div>
+            <div className={isActive(index, subIndex, ridx, idx, rowSelected)} key={idx} > {letter} </div>
           ))}
         </div>
       ))}
