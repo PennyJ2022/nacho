@@ -25,6 +25,14 @@ function isActive(activeRow, activeCol, rowIndex, colIndex, rowSelected) {
   }
 }
 
+function selectedRow(activeRow, selected) {
+  if (selected) {
+    var row = letters[activeRow][0]
+    return "Row " + letters[activeRow][0] + " is selected.";
+  } else {
+    return "No row selected.";
+  }
+}
 function Slideshow() {
   const [index, setIndex] = React.useState(0);
   const indexRef = React.useRef(index);
@@ -108,7 +116,9 @@ function Slideshow() {
           ))}
         </div>
       ))}
-      <div>{output}</div>
+      <div>Row selected: {selectedRow(index, rowSelected)}</div>
+      <hr/>
+      <div>Output: {output}</div>
     </div>
 
   );
