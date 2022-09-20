@@ -2,7 +2,6 @@
 
 .slideshow {
   margin: 0 auto;
-  #overflow: hidden;
   max-width: 500px;
 }
 
@@ -12,10 +11,24 @@
   width: 40px;
   text-align: center;
   margin: auto;
+  font-size: 200%;
+  margin-bottom: 10px;
 }
 
 .slide.active {
   border-style: solid;
   border-color: red;
+}
+
+.selected {
+  margin: auto;
+  font-size: 200%;
+  margin-bottom: 10px;
+}
+
+.output {
+  margin: auto;
+  font-size: 200%;
+  margin-bottom: 10px;
 }
 

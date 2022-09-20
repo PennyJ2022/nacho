@@ -6,7 +6,7 @@ const letters = [["A", "B", "C", "D"],
   ["I", "J", "K", "L", "M", "N"],
   ["O", "P", "Q", "R", "S", "T"],
   ["U", "V", "W", "X", "Y", "Z"],
-  ["SPC"]];
+  ["SP"]];
 const delay = 3000;
 
 function isActive(activeRow, activeCol, rowIndex, colIndex, rowSelected) {
@@ -108,17 +108,18 @@ function Slideshow() {
   }, []);
 
   return (
-    <div className="slideshow">
-      {letters.map((letterRow, ridx) => (
-        <div className="row" key={ridx} >
-          {letterRow.map((letter, idx) => (
-            <div className={isActive(index, subIndex, ridx, idx, rowSelected)} key={idx} > {letter} </div>
-          ))}
-        </div>
-      ))}
-      <div>Row selected: {selectedRow(index, rowSelected)}</div>
-      <hr/>
-      <div>Output: {output}</div>
+    <div>
+      <div className="slideshow">
+        {letters.map((letterRow, ridx) => (
+          <div className="row" key={ridx} >
+            {letterRow.map((letter, idx) => (
+              <div className={isActive(index, subIndex, ridx, idx, rowSelected)} key={idx} > {letter} </div>
+            ))}
+          </div>
+        ))}
+        <div className="selected">Row selected: {selectedRow(index, rowSelected)}</div>
+      </div>
+      <div className="output">Output: {output}</div>
     </div>
 
   );
